@@ -35,6 +35,7 @@ public class GameSession : MonoBehaviour
     IEnumerator LevelCountdown (int newLevel)
     {
         int countdownValue = Mathf.CeilToInt((level + 2) * timePerTile);
+        timerText.enabled = true;
         timerText.text = countdownValue.ToString();
         for (int i = countdownValue; i > 0; i--)
         {
@@ -43,6 +44,8 @@ public class GameSession : MonoBehaviour
         }
         tileHandler.HideValues();
         tileHandler.SetClicksEnabled(true);
+        yield return new WaitForSeconds(1);
+        timerText.enabled = false;
     }
 
     public void HandleCorrectClick(int recentValueClicked)
