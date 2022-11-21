@@ -6,6 +6,10 @@
 
 Rotation input, edge effects, particle effects, collision detection/actions
 
+### Section 4: Quiz Master
+
+Buttons, timer, sliders, Game Manager (not in this repo), TextMeshPro, UI Canvases
+
 ## Other random stuff
 
 ### Memory Game
