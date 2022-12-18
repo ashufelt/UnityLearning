@@ -10,6 +10,10 @@ Rotation input, edge effects, particle effects, collision detection/actions
 
 Buttons, timer, sliders, Game Manager (not in this repo), TextMeshPro, UI Canvases
 
+### Section 5: TileVania
+
+Tilemapping, Sprite splicing, Animations, Tile rules, Input system, Prefabs
+
 ## Other random stuff
 
 ### Memory Game
