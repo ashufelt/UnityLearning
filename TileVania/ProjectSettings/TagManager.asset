@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Chest
+  - InvisWall
   layers:
   - Default
   - TransparentFX
@@ -22,8 +23,8 @@ TagManager:
   - Spikes
   - Arrow
   - Chest
-  - 
-  - 
+  - Interactables
+  - InvisWall
   - 
   - 
   - 
@@ -57,6 +58,9 @@ TagManager:
     locked: 0
   - name: Spikes
     uniqueID: 2036204303
+    locked: 0
+  - name: Interactables
+    uniqueID: 3352799315
     locked: 0
   - name: Enemy
     uniqueID: 3052986471

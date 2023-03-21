@@ -18,8 +18,15 @@ public class EnemyMovement : MonoBehaviour
     {
         myRigidBody.velocity = new Vector2(moveSpeed, 0);
     }
-
+    /*
     void OnTriggerExit2D(Collider2D collision)
+    {
+        Debug.Log("OnTriggerExit2D, enemy" + collision.GetType());
+        moveSpeed = -moveSpeed;
+        FlipEnemyFacing();
+    }
+    */
+    void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("OnTriggerExit2D, enemy" + collision.GetType());
         moveSpeed = -moveSpeed;

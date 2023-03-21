@@ -32,7 +32,7 @@ public class Arrow : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Enemy")
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
         }
