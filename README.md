@@ -14,6 +14,10 @@ Buttons, timer, sliders, Game Manager (not in this repo), TextMeshPro, UI Canvas
 
 Tilemapping, Sprite splicing, Animations, Tile rules, Input system, Prefabs
 
+### Section 6: Laser Defender
+
+Pathing with waypoints, Enemy waves, Instantiation of game objects at runtime
+
 ## Other random stuff
 
 ### Memory Game
