@@ -1,5 +1,7 @@
 # Unity Learning
 
+Important note: Be sure to add .gitignore to any new project folder, or way too much will be included in your unstaged changes
+
 ## Unity 2D Course
 
 ### Section 3: Snow Boarder
