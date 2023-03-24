@@ -1,5 +1,7 @@
 # Unity Learning
 
+Important note: Be sure to add .gitignore to any new project folder, or way too much will be included in your unstaged changes
+
 ## Unity 2D Course
 
 ### Section 3: Snow Boarder
@@ -13,6 +15,10 @@ Buttons, timer, sliders, Game Manager (not in this repo), TextMeshPro, UI Canvas
 ### Section 5: TileVania
 
 Tilemapping, Sprite splicing, Animations, Tile rules, Input system, Prefabs
+
+### Section 6: Laser Defender
+
+Pathing with waypoints, Enemy waves, Instantiation of game objects at runtime
 
 ## Other random stuff
 
