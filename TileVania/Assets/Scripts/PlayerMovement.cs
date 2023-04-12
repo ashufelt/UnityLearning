@@ -10,8 +10,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float climbSpeed = 5.0f;
     [SerializeField] float rollSpeedFactor = 3.0f;
 
-    float baseRunSpeed;
-
     [SerializeField] GameObject arrow;
     [SerializeField] Transform arrowSpawnLocation;
 
@@ -20,7 +18,6 @@ public class PlayerMovement : MonoBehaviour
     BoxCollider2D myBodyCollider;
     CapsuleCollider2D myFeetCollider;
 
-    List<Collider2D> results;
     List<Chest> allChests;
 
     ContactFilter2D chestContactFilter;
@@ -45,7 +42,6 @@ public class PlayerMovement : MonoBehaviour
         isAlive = true;
         isFacingRight = true;
         isRolling = false;
-        baseRunSpeed = runSpeed;
 
         chestContactFilter.SetLayerMask(LayerMask.GetMask("Chest"));
         allChests = new List<Chest>(Object.FindObjectsOfType<Chest>());
