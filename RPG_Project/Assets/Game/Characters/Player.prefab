@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1091856417}
   - component: {fileID: 919560586}
   - component: {fileID: 2228961379499098877}
+  - component: {fileID: 1702621082}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -156,6 +157,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb0433a44e9dec44994afd552209bf24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponRange: 2
+  timeBetweenAttacks: 1
+--- !u!114 &1702621082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284303880171293405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdf750ccf27c69d429307d232e61cd12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8995587993216558478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -210,6 +225,14 @@ PrefabInstance:
     - target: {fileID: 417656, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 428842, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -28.41
+      objectReference: {fileID: 0}
+    - target: {fileID: 428842, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9.23
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 30cf93deff988e74e88a144bd2127c18, type: 3}
