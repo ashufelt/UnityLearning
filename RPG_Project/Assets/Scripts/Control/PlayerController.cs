@@ -30,6 +30,7 @@ namespace RPG.Control
             {
                 CombatTarget target = hit.transform.GetComponent<CombatTarget>();
                 if (target == null) continue;
+                if (!fighter.CanAttack(target)) continue;
                 
                 if (Input.GetMouseButtonDown(0))
                 {
@@ -50,7 +51,6 @@ namespace RPG.Control
                 if (Input.GetMouseButton(0))
                 {
                     mover.StartMoveAction(hit.point);
-                    
                 }
                 return true;
             }
