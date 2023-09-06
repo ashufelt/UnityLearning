@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,12 +15,13 @@ public class GameSession : MonoBehaviour
     TileHandler tileHandler;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         if (tileHandler == null)
         {
             tileHandler = FindObjectOfType<TileHandler>();
         }
+        tileHandler.clickResultDetermined += HandleClickResult;
         SetupLevel(level);
     }
 
@@ -32,7 +32,7 @@ public class GameSession : MonoBehaviour
         StartCoroutine(LevelCountdown(newLevel));
     }
 
-    IEnumerator LevelCountdown (int newLevel)
+    IEnumerator LevelCountdown(int newLevel)
     {
         int countdownValue = Mathf.CeilToInt((level + 2) * timePerTile);
         timerText.enabled = true;
@@ -42,21 +42,30 @@ public class GameSession : MonoBehaviour
             yield return new WaitForSeconds(1);
             timerText.text = (i - 1).ToString();
         }
-        tileHandler.HideValues();
+        tileHandler.HideTileValues();
         tileHandler.SetClicksEnabled(true);
         yield return new WaitForSeconds(1);
         timerText.enabled = false;
     }
 
-    public void HandleCorrectClick(int recentValueClicked)
+    public void HandleClickResult(bool clickWasCorrect, int recentValueClicked)
     {
-        Debug.Log("Tile clicked correctly - GameSession.cs");
-        Debug.Log("Level = " + level + " and Tile clicked = " + recentValueClicked);
-        if (recentValueClicked >= level + 2)
+        if (clickWasCorrect)
+        {
+            Debug.Log("Tile clicked correctly - GameSession.cs");
+            Debug.Log("Level = " + level + " and Tile clicked = " + recentValueClicked);
+            if (recentValueClicked >= level + 2)
+            {
+                tileHandler.SetClicksEnabled(false);
+                level++;
+                StartCoroutine(StartNextLevelAfterDelay());
+            }
+        }
+        else
         {
             tileHandler.SetClicksEnabled(false);
-            level++;
-            StartCoroutine(StartNextLevelAfterDelay());
+            level = 1;
+            StartCoroutine(ResetGameAfterDelay());
         }
     }
 
@@ -67,12 +76,6 @@ public class GameSession : MonoBehaviour
         SetupLevel(level);
     }
 
-    public void HandleIncorrectClick()
-    {
-        tileHandler.SetClicksEnabled(false);
-        level = 1;
-        StartCoroutine(ResetGameAfterDelay());
-    }
 
     IEnumerator ResetGameAfterDelay()
     {

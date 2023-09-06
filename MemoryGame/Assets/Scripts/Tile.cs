@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,18 +10,20 @@ public class Tile : MonoBehaviour
     Text valueText;
     Image squareTileImage;
 
-    TileHandler tileHandler;
+    //I think Tile shouldn't need a reference to the TileHandler that is holding and handling it
+    //TileHandler tileHandler;
 
     public void SetValue(int val) { value = val; }
     public int GetValue() { return value; }
     public void SetLocation(int index) { locationIndex = index; }
     public int GetLocation() { return locationIndex; }
-    public void SetValueAndLocation(int val, int index) { value = val; locationIndex = index; } 
+    public void SetValueAndLocation(int val, int index) { value = val; locationIndex = index; }
+
+    public event Action<Tile> onTileClickedAction;
 
     // Start is called before the first frame update
     void Start()
     {
-        tileHandler = FindObjectOfType<TileHandler>();
         valueText = GetComponentInChildren<Canvas>().GetComponentInChildren<Text>();
         squareTileImage = GetComponentInChildren<Canvas>().GetComponentInChildren<Image>();
         if (valueText == null)
@@ -40,15 +41,18 @@ public class Tile : MonoBehaviour
     {
         Debug.Log("OnTileClicked called");
         Debug.Log("Tile with value " + value + " clicked");
-        tileHandler.HandleTileClick(this);
+        if (onTileClickedAction != null)
+        {
+            onTileClickedAction(this);
+        }
     }
 
-    public void DisplayValue()
+    public void RevealTileValue()
     {
         valueText.text = value.ToString();
     }
 
-    public void HideValue()
+    public void HideTileValue()
     {
         valueText.text = "?";
     }
@@ -58,7 +62,7 @@ public class Tile : MonoBehaviour
         Destroy(gameObject);
     }
 
-    public void SetColor(Color newColor) 
+    public void SetColor(Color newColor)
     {
         squareTileImage.color = newColor;
     }

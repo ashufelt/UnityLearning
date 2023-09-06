@@ -1,11 +1,10 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TileHandler : MonoBehaviour
 {
     [SerializeField] Tile tilePrefab;
-    [SerializeField] private GameSession gameSession;
     [SerializeField] float center_x;
     [SerializeField] float center_y;
 
@@ -15,16 +14,15 @@ public class TileHandler : MonoBehaviour
     private List<Tile> tileList;
     private List<int> locations;
 
-    private int expectedValue;
+    private int correctNextSelection;
     private bool clicksEnabled;
+
+    public event Action<bool, int> clickResultDetermined;
+
     // Start is called before the first frame update
     void Start()
     {
         clicksEnabled = true;
-        if (gameSession == null)
-        {
-            gameSession = FindObjectOfType<GameSession>();
-        }
     }
 
     public void SetupTiles(int tileCount)
@@ -34,7 +32,7 @@ public class TileHandler : MonoBehaviour
         {
             sideLength++;
         }
-        expectedValue = 1;
+        correctNextSelection = 1;
         tileList = new List<Tile>();
         locations = new List<int>();
         for (int j = 0; j < (sideLength * sideLength); j++)
@@ -46,13 +44,14 @@ public class TileHandler : MonoBehaviour
         for (int i = 0; i < tileCount; i++)
         {
             //Debug.Log(locations.ToString());
-            int randomInt = Random.Range(0, locations.Count);
+            int randomInt = UnityEngine.Random.Range(0, locations.Count);
             int locationIndex = locations[randomInt];
             locations.RemoveAt(randomInt);
-            
+
             Tile tmpTile = Instantiate<Tile>(tilePrefab, GetLocation(locationIndex, sideLength), Quaternion.identity);
             tmpTile.SetValueAndLocation(i + 1, locationIndex);
             tmpTile.GetComponent<Transform>().localScale *= (4.0f / sideLength);
+            tmpTile.onTileClickedAction += HandleTileClick;
             tileList.Add(tmpTile);
         }
     }
@@ -68,11 +67,11 @@ public class TileHandler : MonoBehaviour
         return new Vector3(x_location, y_location, 0);
     }
 
-    public void HideValues()
+    public void HideTileValues()
     {
         foreach (Tile tile in tileList)
         {
-            tile.HideValue();
+            tile.HideTileValue();
         }
     }
 
@@ -80,33 +79,41 @@ public class TileHandler : MonoBehaviour
     {
         foreach (Tile tile in tileList)
         {
-            tile.DisplayValue();
+            tile.RevealTileValue();
         }
     }
 
-    public void SetClicksEnabled(bool clicksEnabledBool)
+    public void SetClicksEnabled(bool clicksEnabledSet)
     {
-        clicksEnabled = clicksEnabledBool;
+        clicksEnabled = clicksEnabledSet;
     }
 
     public void HandleTileClick(Tile clickedTile)
     {
-        if (clicksEnabled)
+        if (!clicksEnabled)
         {
-            clickedTile.DisplayValue();
-            if (clickedTile.GetValue() == expectedValue)
+            return;
+        }
+
+        clickedTile.RevealTileValue();
+        if (clickedTile.GetValue() == correctNextSelection)
+        {
+            Debug.Log("Tile clicked correctly - TileHandler.cs");
+            correctNextSelection++;
+            clickedTile.SetColor(correctColor);
+            if (clickResultDetermined != null)
             {
-                Debug.Log("Tile clicked correctly - TileHandler.cs");
-                expectedValue++;
-                clickedTile.SetColor(correctColor);
-                gameSession.HandleCorrectClick(clickedTile.GetValue());
+                clickResultDetermined(true, clickedTile.GetValue());
             }
-            else
+        }
+        else
+        {
+            Debug.Log("Incorrect tile");
+            correctNextSelection = 1;
+            clickedTile.SetColor(incorrectColor);
+            if (clickResultDetermined != null)
             {
-                Debug.Log("Incorrect tile");
-                expectedValue = 1;
-                clickedTile.SetColor(incorrectColor);
-                gameSession.HandleIncorrectClick();
+                clickResultDetermined(false, clickedTile.GetValue());
             }
         }
     }
